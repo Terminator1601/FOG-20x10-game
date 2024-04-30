@@ -1,0 +1,21 @@
+.grid-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Make grid container take up entire viewport height */
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+}
+
+.blue {
+  background-color: blue; /* Set background color to blue */
+}
