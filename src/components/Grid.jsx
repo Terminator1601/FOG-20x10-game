@@ -52,7 +52,7 @@ const Grid = () => {
   const gridRows = 10;
   const gridCols = 20;
   const actualRows = Math.floor(gridRows / 3);
-  const actualCols = Math.floor(gridCols / 3);
+  const actualCols = Math.ceil(gridCols / 3);
 
   for (let rowIndex = 0; rowIndex < gridRows; rowIndex++) {
     grid.push(
@@ -60,7 +60,7 @@ const Grid = () => {
         {Array.from({ length: gridCols }, (_, colIndex) => {
           const isGreenCell =
             rowIndex >= actualRows &&
-            rowIndex < actualRows * 2 &&
+            rowIndex < actualRows * 2+1 &&
             colIndex >= actualCols &&
             colIndex < actualCols * 2;
 
