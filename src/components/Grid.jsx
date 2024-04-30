@@ -68,7 +68,7 @@ const Grid = () => {
     grid.push(
       <div key={`row${rowIndex}`} className="row">
         {" "}
-        {rowIndex}
+        
         {Array.from({ length: gridCols }, (_, colIndex) => {
           const isGreen = isGreenCell(rowIndex, colIndex);
           // Check if current cell is a food cell
@@ -81,7 +81,7 @@ const Grid = () => {
               }`}
               onClick={() => handleCellClick(rowIndex, colIndex)} // Attach onClick event handler
             >
-              {colIndex}
+              
             </div>
           );
         })}
