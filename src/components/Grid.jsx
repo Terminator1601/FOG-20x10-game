@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import "./Grid.css"; 
+import "./Grid.css";
 
 const Grid = () => {
   const [score, setScore] = useState(0);
   const [foodCells, setFoodCells] = useState([]);
+  const [redCells, setRedCells] = useState([]);
   const grid = [];
   const gridRows = 10;
   const gridCols = 20;
@@ -42,9 +43,26 @@ const Grid = () => {
     setFoodCells(newFoodCells);
   };
 
-  // Effect to generate initial food cells
+  // Function to generate red cells
+  const generateRedCells = () => {
+    const newRedCells = [];
+    for (let col = 0; col < gridCols; col++) {
+      if (col >= actualCols && col < actualCols * 2) {
+        for (let realCol = 0; realCol < 2; realCol++) {
+          for (let row = 0; row < actualRows; row++) {
+            newRedCells.push({ row: row, col: realCol + actualCols });
+            newRedCells.push({ row: row+actualCols, col: realCol + actualCols });
+          }
+        }
+      }
+    }
+    setRedCells(newRedCells);
+  };
+
+  // Effect to generate initial food cells and red cells
   useEffect(() => {
     generateFoodCells();
+    generateRedCells();
   }, []);
 
   // Event handler for clicking on a cell
@@ -68,21 +86,28 @@ const Grid = () => {
     grid.push(
       <div key={`row${rowIndex}`} className="row">
         {" "}
-        
         {Array.from({ length: gridCols }, (_, colIndex) => {
           const isGreen = isGreenCell(rowIndex, colIndex);
           // Check if current cell is a food cell
           const isFoodCell = foodCells.includes(`${rowIndex},${colIndex}`);
+          // Check if current cell is a red cell
+          const isRedCell = redCells.some(
+            (cell) => cell.row === rowIndex && cell.col === colIndex
+          );
           return (
             <div
               key={`cell${colIndex}`}
               className={`cell ${
-                isGreen ? "green" : isFoodCell ? "yellow" : "blue"
+                isGreen
+                  ? "green"
+                  : isFoodCell
+                  ? "yellow"
+                  : isRedCell
+                  ? "red"
+                  : "blue"
               }`}
               onClick={() => handleCellClick(rowIndex, colIndex)} // Attach onClick event handler
-            >
-              
-            </div>
+            ></div>
           );
         })}
       </div>
